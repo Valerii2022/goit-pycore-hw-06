@@ -25,8 +25,12 @@ class Record:
     def add_phone(self, phone):
         self.phones.append(Phone(phone))
 
-    def remove_phone(self):
-        pass
+    def remove_phone(self, phone):
+        removed_phone = self.find_phone(phone)
+        if removed_phone:
+            self.phones.remove(removed_phone)
+            return
+        raise ValueError("Phone number not found")
 
     def edit_phone(self, old_phone, new_phone):
         for phone in self.phones:
@@ -66,6 +70,8 @@ book = AddressBook()
 john_record = Record("John")
 john_record.add_phone("1234567890")
 john_record.add_phone("5555555555")
+john_record.add_phone("0987654321")
+john_record.add_phone("4444444444")
 
 book.add_record(john_record)
 
@@ -86,6 +92,11 @@ print(john)
 
 found_phone = john.find_phone("5555555555")
 print(f"{john.name}: {found_phone}")
+
+john.remove_phone("1112223333")
+print(john)
+john.remove_phone("0987654321")
+print(john)
 
 book.delete("Jane")
 book.delete("John")
